@@ -19,9 +19,6 @@
     "main": [
       "${main_entrypoint}"
     ],
-    "client": [
-      "${client_entrypoint}"
-    ],
     "fabric-datagen": [
       "${fabric_datagen_entrypoint}"
     ]
@@ -34,7 +31,6 @@
     "java": ">=21",
     "fabricloader": ">=${fabric_loader_version}",
     "fabric-api": "*",
-    "architectury": ">=${architectury_api_version}",
     "amber": ">=${amber_version}"
   }
 }
