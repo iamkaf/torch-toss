@@ -2,8 +2,10 @@
 
 See the full changelog at https://github.com/iamkaf/torch-toss/commits/main/
 
+## 1.0.1
+
+- fix: snowballs no longer place down torches (oops)
+
 ## 1.0.0
 
 Initial Release
-
-##

@@ -1,6 +1,7 @@
 package com.iamkaf.torchtoss.mixin;
 
 import com.iamkaf.amber.api.level.LevelHelper;
+import com.iamkaf.torchtoss.ModItems;
 import com.iamkaf.torchtoss.TorchToss;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,7 +28,7 @@ public abstract class SnowballMixin extends ThrowableItemProjectile {
 
     @Inject(method = "onHit", at = @At("HEAD"))
     private void onHit(HitResult result, CallbackInfo info) {
-        if (result.getType() == HitResult.Type.BLOCK) {
+        if (getItem().is(ModItems.THROWABLE_TORCH.get()) && result.getType() == HitResult.Type.BLOCK) {
             BlockItem elTorcherino = (BlockItem) Items.TORCH;
             InteractionResult placed = elTorcherino.place(new BlockPlaceContext(
                     (Player) this.getOwner(),
