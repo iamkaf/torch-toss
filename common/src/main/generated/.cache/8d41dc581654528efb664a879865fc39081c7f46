@@ -1,3 +1,7 @@
-// 1.21.4	2025-02-02T00:20:17.1327817	TorchToss/Model Definitions
+// 1.21.4	2025-02-12T01:22:59.6971459	TorchToss/Model Definitions
 7fd0ac57ee5d471d3648c8cb97fb7e10a6f9c788 assets\torchtoss\models\item\throwable_torch.json
+bc676b75906e2972b11908262e4188482f5e31ec assets\torchtoss\items\throwable_soul_torch.json
+af1a53a27d4536f873e2515f4ad191ae6feca64b assets\torchtoss\models\item\throwable_redstone_torch.json
 82f986b23d51343c85e72d08f300ddbbd566a26d assets\torchtoss\items\throwable_torch.json
+180f111715dcf1b8e71aed3a3c2501cfc622011e assets\torchtoss\models\item\throwable_soul_torch.json
+8195837834b19e6b7feb1124036214248d7ddae4 assets\torchtoss\items\throwable_redstone_torch.json

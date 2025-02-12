@@ -16,6 +16,22 @@ public class ModItems {
             )))
     );
 
+    public static final Supplier<Item> THROWABLE_SOUL_TORCH = register(
+            "throwable_soul_torch",
+            () -> new ThrowableTorchItem(new Item.Properties().setId(ResourceKey.create(
+                    Registries.ITEM,
+                    TorchToss.resource("throwable_soul_torch")
+            )))
+    );
+
+    public static final Supplier<Item> THROWABLE_REDSTONE_TORCH = register(
+            "throwable_redstone_torch",
+            () -> new ThrowableTorchItem(new Item.Properties().setId(ResourceKey.create(
+                    Registries.ITEM,
+                    TorchToss.resource("throwable_redstone_torch")
+            )))
+    );
+
     public static void init() {
     }
 

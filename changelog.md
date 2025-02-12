@@ -2,6 +2,10 @@
 
 See the full changelog at https://github.com/iamkaf/torch-toss/commits/main/
 
+## 1.1.0
+
+- feat: added throwable soul torches
+
 ## 1.0.1
 
 - fix: snowballs no longer place down torches (oops)

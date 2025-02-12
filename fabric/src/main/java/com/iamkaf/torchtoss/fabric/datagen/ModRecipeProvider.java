@@ -38,6 +38,40 @@ public class ModRecipeProvider extends RecipeProvider {
                 .requires(ModItems.THROWABLE_TORCH.get(), 2)
                 .unlockedBy("has_throwable_torch", has(ModItems.THROWABLE_TORCH.get()))
                 .save(output);
+
+        // turn 2 soul torches into a throwable soul torch
+        ShapelessRecipeBuilder.shapeless(
+                registries.lookupOrThrow(BuiltInRegistries.ITEM.key()),
+                RecipeCategory.DECORATIONS,
+                new ItemStack(ModItems.THROWABLE_SOUL_TORCH.get(), 2)
+        ).requires(Items.SOUL_TORCH, 2).unlockedBy("has_soul_torch", has(Items.SOUL_TORCH)).save(output);
+
+        // turn 2 throwable soul torches into a soul torch
+        ShapelessRecipeBuilder.shapeless(
+                        registries.lookupOrThrow(BuiltInRegistries.ITEM.key()),
+                        RecipeCategory.DECORATIONS,
+                        new ItemStack(Items.SOUL_TORCH, 2)
+                )
+                .requires(ModItems.THROWABLE_SOUL_TORCH.get(), 2)
+                .unlockedBy("has_throwable_soul_torch", has(ModItems.THROWABLE_SOUL_TORCH.get()))
+                .save(output);
+
+        // turn 2 redstone torches into a throwable redstone torch
+        ShapelessRecipeBuilder.shapeless(
+                registries.lookupOrThrow(BuiltInRegistries.ITEM.key()),
+                RecipeCategory.DECORATIONS,
+                new ItemStack(ModItems.THROWABLE_REDSTONE_TORCH.get(), 2)
+        ).requires(Items.REDSTONE_TORCH, 2).unlockedBy("has_redstone_torch", has(Items.REDSTONE_TORCH)).save(output);
+
+        // turn 2 throwable redstone torches into a redstone torch
+        ShapelessRecipeBuilder.shapeless(
+                        registries.lookupOrThrow(BuiltInRegistries.ITEM.key()),
+                        RecipeCategory.DECORATIONS,
+                        new ItemStack(Items.REDSTONE_TORCH, 2)
+                )
+                .requires(ModItems.THROWABLE_REDSTONE_TORCH.get(), 2)
+                .unlockedBy("has_throwable_redstone_torch", has(ModItems.THROWABLE_REDSTONE_TORCH.get()))
+                .save(output);
     }
 
     public static class Runner extends FabricRecipeProvider {

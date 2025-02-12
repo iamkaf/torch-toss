@@ -20,5 +20,7 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerators) {
         itemModelGenerators.generateFlatItem(ModItems.THROWABLE_TORCH.get(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.THROWABLE_SOUL_TORCH.get(), ModelTemplates.FLAT_ITEM);
+        itemModelGenerators.generateFlatItem(ModItems.THROWABLE_REDSTONE_TORCH.get(), ModelTemplates.FLAT_ITEM);
     }
 }

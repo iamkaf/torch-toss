@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -28,18 +29,36 @@ public abstract class SnowballMixin extends ThrowableItemProjectile {
 
     @Inject(method = "onHit", at = @At("HEAD"))
     private void onHit(HitResult result, CallbackInfo info) {
-        if (getItem().is(ModItems.THROWABLE_TORCH.get()) && result.getType() == HitResult.Type.BLOCK) {
-            BlockItem elTorcherino = (BlockItem) Items.TORCH;
-            InteractionResult placed = elTorcherino.place(new BlockPlaceContext(
-                    (Player) this.getOwner(),
-                    InteractionHand.MAIN_HAND,
-                    getItem(),
-                    (BlockHitResult) result
-            ));
-            TorchToss.LOGGER.info("Placed torch: {}", placed);
-            if (placed.equals(InteractionResult.FAIL)) {
-                LevelHelper.dropItem(level(), getItem(), result.getLocation());
+        try {
+            if ((getTorchBlock(getItem()) != null) && result.getType() == HitResult.Type.BLOCK) {
+                BlockItem elTorcherino = getTorchBlock(getItem());
+
+                assert elTorcherino != null;
+
+                InteractionResult placed = elTorcherino.place(new BlockPlaceContext(
+                        (Player) this.getOwner(),
+                        InteractionHand.MAIN_HAND,
+                        getItem(),
+                        (BlockHitResult) result
+                ));
+                if (placed.equals(InteractionResult.FAIL)) {
+                    LevelHelper.dropItem(level(), getItem(), result.getLocation());
+                }
             }
+        } catch (Exception e) {
+            TorchToss.LOGGER.error("%s", e);
         }
+    }
+
+    private BlockItem getTorchBlock(ItemStack item) {
+        if (item.is(ModItems.THROWABLE_TORCH.get())) {
+            return (BlockItem) Items.TORCH;
+        } else if (item.is(ModItems.THROWABLE_SOUL_TORCH.get())) {
+            return (BlockItem) Items.SOUL_TORCH;
+        } else if (item.is(ModItems.THROWABLE_REDSTONE_TORCH.get())) {
+            return (BlockItem) Items.REDSTONE_TORCH;
+        }
+
+        return null;
     }
 }

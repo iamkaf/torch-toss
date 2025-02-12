@@ -1,3 +1,5 @@
 {
-  "item.torchtoss.throwable_torch": "Throwable Torch"
+  "item.torchtoss.throwable_torch": "Throwable Torch",
+  "item.torchtoss.throwable_soul_torch": "Throwable Soul Torch",
+  "item.torchtoss.throwable_redstone_torch": "Throwable Redstone Torch"
 }
