@@ -2,6 +2,10 @@
 
 See the full changelog at https://github.com/iamkaf/torch-toss/commits/main/
 
+## 2.0.0
+
+- feat: updated to Minecraft 1.21.5
+
 ## 1.2.0
 
 - feat: added the new torches to the functional blocks creative tab
