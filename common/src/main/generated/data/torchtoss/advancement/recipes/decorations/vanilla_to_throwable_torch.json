@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:torch"
+        "recipe": "torchtoss:vanilla_to_throwable_torch"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_throwable_torch": {
+    "has_torch": {
       "conditions": {
         "items": [
           {
-            "items": "torchtoss:throwable_torch"
+            "items": "minecraft:torch"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_throwable_torch"
+      "has_torch"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:torch"
+      "torchtoss:vanilla_to_throwable_torch"
     ]
   }
 }

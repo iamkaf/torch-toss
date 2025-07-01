@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_redstone_torch": {
+    "has_soul_torch": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:redstone_torch"
+            "items": "minecraft:soul_torch"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "torchtoss:throwable_redstone_torch"
+        "recipe": "torchtoss:vanilla_to_throwable_soul_torch"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_redstone_torch"
+      "has_soul_torch"
     ]
   ],
   "rewards": {
     "recipes": [
-      "torchtoss:throwable_redstone_torch"
+      "torchtoss:vanilla_to_throwable_soul_torch"
     ]
   }
 }

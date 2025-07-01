@@ -2,6 +2,10 @@
 
 See the full changelog at https://github.com/iamkaf/torch-toss/commits/main/
 
+## 2.1.1
+
+- fix: gave recipes an id to prevent conflicts
+
 ## 2.1.0
 
 - feat: ported to Minecraft 1.21.6

@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:soul_torch"
+        "recipe": "torchtoss:throwable_to_vanilla_torch"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_throwable_soul_torch": {
+    "has_throwable_torch": {
       "conditions": {
         "items": [
           {
-            "items": "torchtoss:throwable_soul_torch"
+            "items": "torchtoss:throwable_torch"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_throwable_soul_torch"
+      "has_throwable_torch"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:soul_torch"
+      "torchtoss:throwable_to_vanilla_torch"
     ]
   }
 }
