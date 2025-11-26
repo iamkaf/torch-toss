@@ -2,6 +2,10 @@
 
 See the full changelog at https://github.com/iamkaf/torch-toss/commits/main/
 
+## 3.0.0
+
+- feat: ported to Minecraft 1.21.10
+
 ## 2.2.0
 
 - feat: ported to Minecraft 1.21.7
