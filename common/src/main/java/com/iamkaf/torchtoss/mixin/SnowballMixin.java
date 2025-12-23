@@ -2,7 +2,6 @@ package com.iamkaf.torchtoss.mixin;
 
 import com.iamkaf.amber.api.level.LevelHelper;
 import com.iamkaf.torchtoss.ModItems;
-import com.iamkaf.torchtoss.TorchToss;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -16,6 +15,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Snowball.class)
 public abstract class SnowballMixin extends ThrowableItemProjectile {
+    private static final Logger LOGGER = LoggerFactory.getLogger("TorchToss");
+
     public SnowballMixin(EntityType<? extends ThrowableItemProjectile> entityType, Level level) {
         super(entityType, level);
     }
@@ -46,7 +49,7 @@ public abstract class SnowballMixin extends ThrowableItemProjectile {
                 }
             }
         } catch (Exception e) {
-            TorchToss.LOGGER.error("%s", e);
+            LOGGER.error("Error placing torch from throwable item", e);
         }
     }
 
@@ -55,6 +58,8 @@ public abstract class SnowballMixin extends ThrowableItemProjectile {
             return (BlockItem) Items.TORCH;
         } else if (item.is(ModItems.THROWABLE_SOUL_TORCH.get())) {
             return (BlockItem) Items.SOUL_TORCH;
+        } else if (item.is(ModItems.THROWABLE_COPPER_TORCH.get())) {
+            return (BlockItem) Items.COPPER_TORCH;
         } else if (item.is(ModItems.THROWABLE_REDSTONE_TORCH.get())) {
             return (BlockItem) Items.REDSTONE_TORCH;
         }

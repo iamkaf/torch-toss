@@ -1,14 +1,17 @@
 {
   "required": true,
-  "package": "${mod_group}.mixin",
-  "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
-  "client": [
-  ],
+  "package": "com.iamkaf.torchtoss.mixin",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "JAVA_18",
   "mixins": [
     "SnowballMixin"
   ],
+  "client": [
+  ],
+  "server": [],
   "injectors": {
     "defaultRequire": 1
   }
 }
+

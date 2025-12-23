@@ -1,0 +1,29 @@
+{
+  "parent": "torchtoss:throw_redstone_torch",
+  "criteria": {
+    "throw_soul_torch": {
+      "conditions": {
+        "item": "torchtoss:throwable_soul_torch"
+      },
+      "trigger": "torchtoss:throw_torch"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.torchtoss.throw_soul_torch.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "torchtoss:throwable_soul_torch"
+    },
+    "title": {
+      "translate": "advancements.torchtoss.throw_soul_torch.title"
+    }
+  },
+  "requirements": [
+    [
+      "throw_soul_torch"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

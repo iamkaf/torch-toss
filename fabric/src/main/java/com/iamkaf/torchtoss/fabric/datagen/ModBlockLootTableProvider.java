@@ -6,6 +6,9 @@ import net.minecraft.core.HolderLookup;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Generates block loot tables.
+ */
 public class ModBlockLootTableProvider extends FabricBlockLootTableProvider {
     public ModBlockLootTableProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
@@ -13,5 +16,6 @@ public class ModBlockLootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
+        // Add loot table generation here
     }
 }
