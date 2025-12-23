@@ -89,6 +89,8 @@ sourcesJar {
     from(rootProject.file('LICENSE')) {
         rename { "${it}_${mod_name}" }
     }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 jar {
@@ -107,6 +109,8 @@ jar {
                 'Built-On-Minecraft'    : minecraft_version
         ])
     }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 processResources {
@@ -156,6 +160,8 @@ processResources {
     }
 
     inputs.properties(expandProps)
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 publishing {
