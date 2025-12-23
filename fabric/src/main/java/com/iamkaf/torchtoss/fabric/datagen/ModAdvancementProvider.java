@@ -7,11 +7,11 @@ import com.iamkaf.torchtoss.advancement.ThrowableTorchTrigger;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.criterion.ContextAwarePredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
@@ -32,9 +32,9 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
     @Override
     public void generateAdvancement(HolderLookup.Provider registries, Consumer<AdvancementHolder> writer) {
         // 1. Throw a normal torch
-        ResourceLocation normalTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_TORCH.get());
+        Identifier normalTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_TORCH.get());
         AdvancementHolder normalTorch = Advancement.Builder.advancement()
-                .parent(ResourceLocation.fromNamespaceAndPath("minecraft", "adventure/root"))
+                .parent(Identifier.fromNamespaceAndPath("minecraft", "adventure/root"))
                 .display(
                         ModItems.THROWABLE_TORCH.get(),
                         Component.translatable("advancements.torchtoss.throw_torch.title"),
@@ -50,7 +50,7 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
                 .save(writer, TorchTossConstants.resource("throw_torch").toString());
 
         // 2. Throw a copper torch
-        ResourceLocation copperTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_COPPER_TORCH.get());
+        Identifier copperTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_COPPER_TORCH.get());
         AdvancementHolder copperTorch = Advancement.Builder.advancement()
                 .parent(normalTorch)
                 .display(
@@ -66,7 +66,7 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
                 .save(writer, TorchTossConstants.resource("throw_copper_torch").toString());
 
         // 3. Throw a redstone torch
-        ResourceLocation redstoneTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_REDSTONE_TORCH.get());
+        Identifier redstoneTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_REDSTONE_TORCH.get());
         AdvancementHolder redstoneTorch = Advancement.Builder.advancement()
                 .parent(copperTorch)
                 .display(
@@ -82,7 +82,7 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
                 .save(writer, TorchTossConstants.resource("throw_redstone_torch").toString());
 
         // 4. Throw a soul torch
-        ResourceLocation soulTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_SOUL_TORCH.get());
+        Identifier soulTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_SOUL_TORCH.get());
         AdvancementHolder soulTorch = Advancement.Builder.advancement()
                 .parent(redstoneTorch)
                 .display(

@@ -1,6 +1,6 @@
 package com.iamkaf.torchtoss;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +16,7 @@ public class TorchTossConstants {
     /**
      * Creates a resource location in the mod namespace with the given path.
      */
-    public static ResourceLocation resource(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+    public static Identifier resource(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
 }

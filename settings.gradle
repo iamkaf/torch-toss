@@ -57,5 +57,6 @@ dependencyResolutionManagement {
 rootProject.name = 'Torch Toss'
 include('common')
 include('fabric')
-include('forge')
+// Forge is temporarily disabled until it supports Gradle 9
+// include('forge')
 include('neoforge')

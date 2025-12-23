@@ -7,7 +7,7 @@ import com.iamkaf.amber.api.registry.v1.DeferredRegister;
 import com.iamkaf.amber.api.registry.v1.creativetabs.CreativeTabHelper;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -57,7 +57,7 @@ public class ModItems {
         // Add items to the Functional Blocks creative tab
         ResourceKey<net.minecraft.world.item.CreativeModeTab> functionalBlocksTab = ResourceKey.create(
                 Registries.CREATIVE_MODE_TAB,
-                ResourceLocation.fromNamespaceAndPath("minecraft", "functional_blocks")
+                Identifier.fromNamespaceAndPath("minecraft", "functional_blocks")
         );
 
         // FIXME: remove these casts when porting to Amber 9

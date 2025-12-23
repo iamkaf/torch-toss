@@ -4,13 +4,13 @@ import java.util.Optional;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.advancements.criterion.ContextAwarePredicate;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Trigger that fires when a player throws a throwable torch.
@@ -34,18 +34,18 @@ public class ThrowableTorchTrigger extends SimpleCriterionTrigger<ThrowableTorch
     /**
      * The trigger instance - stores condition data for JSON serialization.
      */
-    public record TriggerInstance(Optional<ContextAwarePredicate> player, ResourceLocation item)
+    public record TriggerInstance(Optional<ContextAwarePredicate> player, Identifier item)
             implements SimpleCriterionTrigger.SimpleInstance {
 
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                 EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
-                ResourceLocation.CODEC.fieldOf("item").forGetter(TriggerInstance::item)
+                Identifier.CODEC.fieldOf("item").forGetter(TriggerInstance::item)
             ).apply(instance, TriggerInstance::new)
         );
 
         public boolean matches(Item thrownItem) {
-            ResourceLocation thrownKey = BuiltInRegistries.ITEM.getKey(thrownItem);
+            Identifier thrownKey = BuiltInRegistries.ITEM.getKey(thrownItem);
             return thrownKey.equals(this.item);
         }
 
