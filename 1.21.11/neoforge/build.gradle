@@ -5,44 +5,20 @@ plugins {
 }
 
 dependencies {
-    // Runtime mods (optional, removable)
-
-    // JEI - include if supported with NeoForge version
-    if (project.hasProperty('jei_version_neoforge') && jei_version_neoforge != "NOT_AVAILABLE") {
-        runtimeOnly "maven.modrinth:jei:${jei_version_neoforge}"
-    }
-
-    // REI - include if supported with NeoForge version
-    if (project.hasProperty('rei_version_neoforge') && rei_version_neoforge != "NOT_AVAILABLE") {
-        runtimeOnly "maven.modrinth:rei:${rei_version_neoforge}"
-    }
-
-    // Jade - include if supported with NeoForge version
-    if (project.hasProperty('jade_version_neoforge') && jade_version_neoforge != "NOT_AVAILABLE") {
-        runtimeOnly "maven.modrinth:jade:${jade_version_neoforge}"
-    }
-
-    // Sodium - include if supported with NeoForge version
-    if (project.hasProperty('sodium_version_neoforge') && sodium_version_neoforge != "NOT_AVAILABLE") {
-        runtimeOnly "maven.modrinth:sodium:${sodium_version_neoforge}"
-    }
-
-    // Library dependencies (become required when selected)
-    if (project.hasProperty('amber_version') && amber_version != "NOT_AVAILABLE") {
-        implementation "com.iamkaf.amber:amber-neoforge:${amber_version}"
-    }
+    // Amber integration
+    implementation libs.amber.neoforge
 }
 
 neoForge {
-    version = neoforge_version
+    version = libs.neoforge.get().version.toString()
     // Automatically enable neoforge AccessTransformers if the file exists
     def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
     }
     parchment {
-        minecraftVersion = parchment_minecraft
-        mappingsVersion = parchment_version
+        minecraftVersion = libs.versions.parchment.minecraft.get()
+        mappingsVersion = libs.parchment.get().version.toString()
     }
     runs {
         configureEach {
@@ -66,7 +42,7 @@ neoForge {
     }
 }
 
-// sourceSets.main.resources { srcDir 'src/generated/resources' }
+//sourceSets.main.resources.srcDir('src/generated/resources')
 
 publisher {
     // Setup the required API keys. You only need to define the keys for
@@ -91,7 +67,7 @@ publisher {
     // You can also use VersionType.BETA, VersionType.ALPHA or VersionType.RELEASE
     setVersionType(release_type)
 
-    setChangelog(extractHeaderLatestFooterFromChangelog(file('../changelog.md').text))
+    setChangelog(extractHeaderLatestFooterFromChangelog(file('../../changelog.md').text))
 
     // Required for Modrinth/GitHub
     setProjectVersion(rootProject.version)

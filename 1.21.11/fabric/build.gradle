@@ -5,47 +5,19 @@ plugins {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
+    minecraft libs.minecraft
     mappings loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${parchment_minecraft}:${parchment_version}@zip")
+        parchment(libs.parchment)
     }
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modImplementation libs.fabric.loader
+    modImplementation libs.fabric.api
+    modImplementation libs.modmenu
+    // Uncomment the next line if you want to use Amber
+    modImplementation libs.amber.fabric
+}
 
-    // Runtime mods (optional, removable)
-    // Mod Menu - include if supported with Fabric version
-    if (project.hasProperty('mod_menu_version_fabric') && mod_menu_version_fabric != "NOT_AVAILABLE") {
-        modRuntimeOnly "maven.modrinth:modmenu:${mod_menu_version_fabric}"
-    }
-
-    // JEI - include if supported with Fabric version
-    if (project.hasProperty('jei_version_fabric') && jei_version_fabric != "NOT_AVAILABLE") {
-        modRuntimeOnly "maven.modrinth:jei:${jei_version_fabric}"
-    }
-
-    // REI - include if supported with Fabric version
-    if (project.hasProperty('rei_version_fabric') && rei_version_fabric != "NOT_AVAILABLE") {
-        modRuntimeOnly "maven.modrinth:rei:${rei_version_fabric}"
-    }
-
-    // Jade - include if supported with Fabric version
-    if (project.hasProperty('jade_version_fabric') && jade_version_fabric != "NOT_AVAILABLE") {
-        modRuntimeOnly "maven.modrinth:jade:${jade_version_fabric}"
-    }
-
-    // Sodium - include if supported with Fabric version
-    if (project.hasProperty('sodium_version_fabric') && sodium_version_fabric != "NOT_AVAILABLE") {
-        modRuntimeOnly "maven.modrinth:sodium:${sodium_version_fabric}"
-    }
-
-    // Library dependencies (become required when selected)
-    if (project.hasProperty('amber_version') && amber_version != "NOT_AVAILABLE") {
-        modImplementation "com.iamkaf.amber:amber-fabric:${amber_version}"
-    }
-    }
-
-// sourceSets.main.resources.srcDir('src/generated/resources')
+//sourceSets.main.resources.srcDir('src/generated/resources')
 
 fabricApi {
     configureDataGeneration {
@@ -101,7 +73,7 @@ publisher {
     // You can also use VersionType.BETA, VersionType.ALPHA or VersionType.RELEASE
     setVersionType(release_type)
 
-    setChangelog(extractHeaderLatestFooterFromChangelog(file('../changelog.md').text))
+    setChangelog(extractHeaderLatestFooterFromChangelog(file('../../changelog.md').text))
 
     // Required for Modrinth/GitHub
     setProjectVersion(rootProject.version)
