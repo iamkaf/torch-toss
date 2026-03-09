@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "torchtoss:item/throwable_copper_torch"
+  }
+}

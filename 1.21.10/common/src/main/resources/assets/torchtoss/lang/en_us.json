@@ -1,0 +1,14 @@
+{
+  "item.torchtoss.throwable_torch": "Throwable Torch",
+  "item.torchtoss.throwable_soul_torch": "Throwable Soul Torch",
+  "item.torchtoss.throwable_copper_torch": "Throwable Copper Torch",
+  "item.torchtoss.throwable_redstone_torch": "Throwable Redstone Torch",
+  "advancements.torchtoss.throw_torch.title": "Light Up the World",
+  "advancements.torchtoss.throw_torch.description": "Throw a throwable torch",
+  "advancements.torchtoss.throw_copper_torch.title": "Going Green",
+  "advancements.torchtoss.throw_copper_torch.description": "Throw a throwable copper torch",
+  "advancements.torchtoss.throw_redstone_torch.title": "Remote Activation",
+  "advancements.torchtoss.throw_redstone_torch.description": "Throw a throwable redstone torch",
+  "advancements.torchtoss.throw_soul_torch.title": "Into the Flames",
+  "advancements.torchtoss.throw_soul_torch.description": "Throw a throwable soul torch"
+}

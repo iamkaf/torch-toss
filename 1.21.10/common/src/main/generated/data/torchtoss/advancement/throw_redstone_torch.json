@@ -1,0 +1,29 @@
+{
+  "parent": "torchtoss:throw_copper_torch",
+  "criteria": {
+    "throw_redstone_torch": {
+      "conditions": {
+        "item": "torchtoss:throwable_redstone_torch"
+      },
+      "trigger": "torchtoss:throw_torch"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.torchtoss.throw_redstone_torch.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "torchtoss:throwable_redstone_torch"
+    },
+    "title": {
+      "translate": "advancements.torchtoss.throw_redstone_torch.title"
+    }
+  },
+  "requirements": [
+    [
+      "throw_redstone_torch"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
