@@ -6,3 +6,5 @@
 [![KoFi](https://img.shields.io/badge/KoFi-iamkaf?style=for-the-badge&logo=kofi&logoColor=%2330d1e3&label=Support%20Me&color=%2330d1e3)](https://ko-fi.com/iamkaffe)
 
 With Torch Toss, you can throw torches ahead of you, lighting up caves, tunnels, and dark paths with ease!
+
+Requires [Amber](https://modrinth.com/mod/amber) and [Konfig](https://modrinth.com/mod/konfig).

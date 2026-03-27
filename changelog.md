@@ -5,6 +5,13 @@ All notable changes to Torch Toss will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.0.0
+
+### Added
+
+- Ported to Minecraft 26.1 for Fabric and NeoForge.
+- Added configs for torch damage.
+
 ## 4.0.0
 
 ### Changed
