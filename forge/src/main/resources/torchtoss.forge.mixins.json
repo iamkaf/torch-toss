@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.iamkaf.torchtoss.mixin",
+  "compatibilityLevel": "${mixin_compat_forge}",
+  "mixins": [],
+  "client": [
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

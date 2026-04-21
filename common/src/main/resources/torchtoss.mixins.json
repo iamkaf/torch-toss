@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.iamkaf.torchtoss.mixin",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "${mixin_compat_common}",
+  "mixins": [
+    "SnowballMixin"
+  ],
+  "client": [
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

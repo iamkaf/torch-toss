@@ -1,0 +1,42 @@
+plugins {
+    id 'com.iamkaf.multiloader.common'
+}
+
+def minecraftVersion = requiredProp(project, 'project.minecraft')
+def libs = catalogFor(project, minecraftVersion)
+def versionAtLeast = { current, target ->
+    def lhs = current.tokenize('.').collect { it as int }
+    def rhs = target.tokenize('.').collect { it as int }
+    def size = Math.max(lhs.size(), rhs.size())
+    for (int i = 0; i < size; i++) {
+        def l = i < lhs.size() ? lhs[i] : 0
+        def r = i < rhs.size() ? rhs[i] : 0
+        if (l != r) {
+            return l > r
+        }
+    }
+    return true
+}
+
+sourceSets {
+    main {
+        if (versionAtLeast(minecraftVersion, '1.21.10')) {
+            resources.srcDir(file('src/copper/generated'))
+        }
+    }
+}
+
+dependencies {
+    if (minecraftVersion == '1.16.5' ||
+        minecraftVersion.startsWith('1.16.') ||
+        minecraftVersion == '1.16' ||
+        minecraftVersion.startsWith('1.15.') ||
+        minecraftVersion == '1.15' ||
+        minecraftVersion.startsWith('1.14.')) {
+        modImplementation library(libs, 'amber-fabric')
+        modCompileOnly library(libs, 'konfig-fabric')
+    } else {
+        implementation library(libs, 'amber')
+        compileOnly library(libs, 'konfig')
+    }
+}

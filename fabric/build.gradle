@@ -1,0 +1,88 @@
+plugins {
+    id 'com.iamkaf.multiloader.fabric'
+}
+
+def minecraftVersion = requiredProp(project, 'project.minecraft')
+def isModernLine = !minecraftVersion.startsWith('1.')
+def useLegacyFabricApiModules = minecraftVersion == '1.16' || minecraftVersion == '1.16.1'
+def useLegacyPre116FabricCompat = ['1.14.4', '1.15', '1.15.1', '1.15.2'].contains(minecraftVersion)
+def libs = catalogFor(project, minecraftVersion)
+def useLegacy116xFabricDatagenCompat = ['1.16', '1.16.1', '1.16.2', '1.16.3', '1.16.4', '1.16.5'].contains(minecraftVersion)
+def useLegacy117FabricDatagenCompat = minecraftVersion == '1.17'
+def useLegacy117FabricGameplayCompat = ['1.17', '1.17.1'].contains(minecraftVersion)
+def useLegacy118FabricCompat = minecraftVersion == '1.18' || minecraftVersion == '1.18.1'
+def useLegacy118FabricGameplayCompat = ['1.18', '1.18.1', '1.18.2'].contains(minecraftVersion)
+def useLegacy119FabricGameplayCompat = ['1.19', '1.19.1', '1.19.2', '1.19.3', '1.19.4', '1.20', '1.20.1', '1.20.2', '1.20.3', '1.20.4'].contains(minecraftVersion)
+def needsFabricDatagenRuntime = gradle.startParameter.taskNames.any { it.toLowerCase().contains('datagen') }
+def packMcmetaFormat = minecraftVersion.startsWith('1.21') ? '81' : (minecraftVersion.startsWith('1.20') ? '15' : '8')
+def packMcmetaMinMax = minecraftVersion.startsWith('1.21')
+    ? ',\n    "min_format": 81,\n    "max_format": 81'
+    : ''
+def packMcmetaDescription = "${requiredProp(project, 'mod.name')} resources"
+
+if (useLegacy118FabricCompat) {
+    configurations.configureEach {
+        exclude group: 'net.fabricmc.fabric-api', module: 'fabric-registry-sync-v0'
+        exclude group: 'net.fabricmc.fabric-api', module: 'fabric-loot-api-v2'
+        resolutionStrategy.force 'net.fabricmc.fabric-api:fabric-resource-loader-v0:0.4.12+e66b59e93a'
+    }
+}
+
+dependencies {
+    if (isModernLine) {
+        compileOnly library(libs, 'amber')
+        implementation library(libs, 'fabric-api')
+        runtimeOnly library(libs, 'amber-fabric')
+        implementation library(libs, 'konfig-fabric')
+    } else {
+        if (!useLegacyFabricApiModules) {
+            modImplementation library(libs, 'fabric-api')
+            modLocalRuntime library(libs, 'fabric-api')
+        }
+        if (useLegacy116xFabricDatagenCompat) {
+            compileOnly library(libs, 'fabric-data-generation-api-v1')
+            if (needsFabricDatagenRuntime) {
+                modImplementation library(libs, 'fabric-data-generation-api-v1')
+            }
+        }
+        if (useLegacy117FabricDatagenCompat) {
+            modImplementation library(libs, 'fabric-data-generation-api-v1')
+        }
+        modImplementation library(libs, 'amber-fabric')
+        modImplementation library(libs, 'konfig-fabric')
+    }
+}
+
+tasks.named('stageMergedJavaSources').configure {
+    if ((useLegacyPre116FabricCompat || useLegacy116xFabricDatagenCompat || useLegacy117FabricGameplayCompat || useLegacy118FabricGameplayCompat || useLegacy119FabricGameplayCompat) && !needsFabricDatagenRuntime) {
+        exclude 'com/iamkaf/torchtoss/fabric/ModDatagen.java'
+        exclude 'com/iamkaf/torchtoss/fabric/datagen/**'
+    }
+}
+
+tasks.named('stageMergedResources').configure {
+    filesMatching('pack.mcmeta') {
+        expand(
+            pack_format: packMcmetaFormat,
+            pack_minmax: packMcmetaMinMax,
+            pack_description: packMcmetaDescription
+        )
+    }
+    if (useLegacyPre116FabricCompat) {
+        exclude 'assets/torchtoss/models/item/throwable_soul_torch.json'
+        exclude 'data/torchtoss/recipes/*soul_torch*.json'
+        exclude 'data/torchtoss/advancements/throw_soul_torch.json'
+        exclude 'data/torchtoss/advancements/recipes/decorations/*soul_torch*.json'
+    }
+}
+
+tasks.named('processResources').configure {
+    if (useLegacyPre116FabricCompat) {
+        exclude 'assets/torchtoss/models/item/throwable_soul_torch.json'
+        exclude 'data/torchtoss/recipes/*soul_torch*.json'
+        exclude 'data/torchtoss/advancements/throw_soul_torch.json'
+        exclude 'data/torchtoss/advancements/recipes/decorations/*soul_torch*.json'
+    }
+}
+
+enableCommonFabricDatagen.call()
