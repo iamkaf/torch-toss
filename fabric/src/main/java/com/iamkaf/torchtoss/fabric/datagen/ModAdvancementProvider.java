@@ -15,7 +15,9 @@ import net.minecraft.advancements.AdvancementType;
 //?} else {
 import net.minecraft.advancements.FrameType;
 //?}
-//? if >=1.21.11 {
+//? if >=26.2-rc-2 {
+import net.minecraft.advancements.predicates.ContextAwarePredicate;
+//?} else if >=1.21.11 {
 import net.minecraft.advancements.criterion.ContextAwarePredicate;
 //?} else {
 //? if <1.20 {
@@ -238,7 +240,11 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
     }
 
     //? if >=1.20.2 {
-    //? if >=1.21.11 {
+    //? if >=26.2-rc-2 {
+    private static net.minecraft.advancements.triggers.Criterion<ThrowableTorchTrigger.TriggerInstance> throwableTorchCriterion(Identifier item) {
+        return ModTriggers.THROW_TORCH.get().createCriterion(new ThrowableTorchTrigger.TriggerInstance(Optional.empty(), item));
+    }
+    //?} else if >=1.21.11 {
     private static net.minecraft.advancements.Criterion<ThrowableTorchTrigger.TriggerInstance> throwableTorchCriterion(Identifier item) {
         return ModTriggers.THROW_TORCH.get().createCriterion(new ThrowableTorchTrigger.TriggerInstance(Optional.empty(), item));
     }

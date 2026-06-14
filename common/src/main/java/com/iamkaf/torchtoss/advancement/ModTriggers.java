@@ -5,7 +5,11 @@ import java.util.function.Supplier;
 import com.iamkaf.torchtoss.TorchTossConstants;
 //? if >=1.20.3 {
 import com.iamkaf.amber.api.registry.v1.DeferredRegister;
+//? if >=26.2-rc-2 {
+import net.minecraft.advancements.triggers.CriterionTrigger;
+//?} else {
 import net.minecraft.advancements.CriterionTrigger;
+//?}
 import net.minecraft.core.registries.Registries;
 //?} else {
 import net.minecraft.advancements.CriteriaTriggers;
