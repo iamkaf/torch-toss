@@ -60,7 +60,7 @@ scenario_file=""
 scenario_name=""
 scenario_kind=""
 case "$version" in
-  1.21.10|1.21.11|26.1|26.1.1|26.1.2|26.2-rc-2)
+  1.21.10|1.21.11|26.1|26.1.1|26.1.2|26.2)
     scenario_file="test/scenarios/torchtoss/throwables-26.1.json"
     scenario_name="torchtoss-throwables-26.1"
     scenario_kind="copper"
