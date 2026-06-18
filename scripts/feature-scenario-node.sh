@@ -60,7 +60,7 @@ scenario_file=""
 scenario_name=""
 scenario_kind=""
 case "$version" in
-  1.21.10|1.21.11|26.1|26.1.1|26.1.2)
+  1.21.10|1.21.11|26.1|26.1.1|26.1.2|26.2)
     scenario_file="test/scenarios/torchtoss/throwables-26.1.json"
     scenario_name="torchtoss-throwables-26.1"
     scenario_kind="copper"
@@ -81,7 +81,12 @@ case "$version" in
     ;;
 esac
 
-catalog="/home/kaf/code/mods/version-catalog/mc-$version/gradle/libs.versions.toml"
+workspace_root="$(git rev-parse --show-superproject-working-tree 2>/dev/null || true)"
+catalog_root="${TORCHTOSS_VERSION_CATALOG_ROOT:-}"
+if [ -z "$catalog_root" ] && [ -n "$workspace_root" ]; then
+  catalog_root="$workspace_root/tooling/version-catalog"
+fi
+catalog="$catalog_root/mc-$version/gradle/libs.versions.toml"
 if [ ! -f "$catalog" ] || ! rg -q '^teakit = ' "$catalog"; then
   echo "TeaKit is not configured in the shared catalog for $version" >&2
   exit 1
