@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "ingredients": [
     "torchtoss:throwable_soul_torch",
     "torchtoss:throwable_soul_torch"

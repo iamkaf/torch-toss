@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "ingredients": [
     "torchtoss:throwable_redstone_torch",
     "torchtoss:throwable_redstone_torch"

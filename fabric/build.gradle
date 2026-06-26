@@ -2,11 +2,32 @@ plugins {
     id 'com.iamkaf.multiloader.fabric'
 }
 
-def minecraftVersion = requiredProp(project, 'project.minecraft')
+def versionProperties = new Properties()
+def versionPropertiesFile = rootProject.file("versions/${project.name}/gradle.properties")
+if (versionPropertiesFile.isFile()) {
+    versionPropertiesFile.withInputStream { versionProperties.load(it) }
+}
+def minecraftVersion = versionProperties.getProperty('project.minecraft')
+if (!minecraftVersion) {
+    throw new GradleException("Missing project.minecraft for ${project.path}")
+}
 def isModernLine = !minecraftVersion.startsWith('1.')
 def useLegacyFabricApiModules = minecraftVersion == '1.16' || minecraftVersion == '1.16.1'
 def useLegacyPre116FabricCompat = ['1.14.4', '1.15', '1.15.1', '1.15.2'].contains(minecraftVersion)
-def libs = catalogFor(project, minecraftVersion)
+def catalogs = extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension)
+def catalogName = "libsMc${minecraftVersion.replace('.', '').replace('-', '')}"
+def catalog = catalogs.find(catalogName)
+if (!catalog.present) {
+    throw new GradleException("Missing version catalog '${catalogName}'")
+}
+def libs = catalog.get()
+def lib = { alias ->
+    def dependency = libs.findLibrary(alias)
+    if (!dependency.present) {
+        throw new GradleException("Missing library alias '${alias}'")
+    }
+    dependency.get()
+}
 def useLegacy116xFabricDatagenCompat = ['1.16', '1.16.1', '1.16.2', '1.16.3', '1.16.4', '1.16.5'].contains(minecraftVersion)
 def useLegacy117FabricDatagenCompat = minecraftVersion == '1.17'
 def useLegacy117FabricGameplayCompat = ['1.17', '1.17.1'].contains(minecraftVersion)
@@ -18,7 +39,7 @@ def packMcmetaFormat = minecraftVersion.startsWith('1.21') ? '81' : (minecraftVe
 def packMcmetaMinMax = minecraftVersion.startsWith('1.21')
     ? ',\n    "min_format": 81,\n    "max_format": 81'
     : ''
-def packMcmetaDescription = "${requiredProp(project, 'mod.name')} resources"
+def packMcmetaDescription = "${providers.gradleProperty('mod.name').get()} resources"
 
 if (useLegacy118FabricCompat) {
     configurations.configureEach {
@@ -30,26 +51,26 @@ if (useLegacy118FabricCompat) {
 
 dependencies {
     if (isModernLine) {
-        compileOnly library(libs, 'amber')
-        implementation library(libs, 'fabric-api')
-        runtimeOnly library(libs, 'amber-fabric')
-        implementation library(libs, 'konfig-fabric')
+        compileOnly lib('amber')
+        implementation lib('fabric-api')
+        runtimeOnly lib('amber-fabric')
+        implementation lib('konfig-fabric')
     } else {
         if (!useLegacyFabricApiModules) {
-            modImplementation library(libs, 'fabric-api')
-            modLocalRuntime library(libs, 'fabric-api')
+            modImplementation lib('fabric-api')
+            modLocalRuntime lib('fabric-api')
         }
         if (useLegacy116xFabricDatagenCompat) {
-            compileOnly library(libs, 'fabric-data-generation-api-v1')
+            compileOnly lib('fabric-data-generation-api-v1')
             if (needsFabricDatagenRuntime) {
-                modImplementation library(libs, 'fabric-data-generation-api-v1')
+                modImplementation lib('fabric-data-generation-api-v1')
             }
         }
         if (useLegacy117FabricDatagenCompat) {
-            modImplementation library(libs, 'fabric-data-generation-api-v1')
+            modImplementation lib('fabric-data-generation-api-v1')
         }
-        modImplementation library(libs, 'amber-fabric')
-        modImplementation library(libs, 'konfig-fabric')
+        modImplementation lib('amber-fabric')
+        modImplementation lib('konfig-fabric')
     }
 }
 
@@ -85,4 +106,6 @@ tasks.named('processResources').configure {
     }
 }
 
-enableCommonFabricDatagen.call()
+multiloaderFabric {
+    commonDatagen = true
+}

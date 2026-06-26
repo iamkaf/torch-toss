@@ -2,21 +2,51 @@ plugins {
     id 'com.iamkaf.multiloader.forge'
 }
 
-def minecraftVersion = requiredProp(project, 'project.minecraft')
-def libs = catalogFor(project, minecraftVersion)
+def versionProperties = new Properties()
+def versionPropertiesFile = rootProject.file("versions/${project.name}/gradle.properties")
+if (versionPropertiesFile.isFile()) {
+    versionPropertiesFile.withInputStream { versionProperties.load(it) }
+}
+def minecraftVersion = versionProperties.getProperty('project.minecraft')
+if (!minecraftVersion) {
+    throw new GradleException("Missing project.minecraft for ${project.path}")
+}
+def catalogs = extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension)
+def catalogName = "libsMc${minecraftVersion.replace('.', '').replace('-', '')}"
+def catalog = catalogs.find(catalogName)
+if (!catalog.present) {
+    throw new GradleException("Missing version catalog '${catalogName}'")
+}
+def libs = catalog.get()
+def lib = { alias ->
+    def dependency = libs.findLibrary(alias)
+    if (!dependency.present) {
+        throw new GradleException("Missing library alias '${alias}'")
+    }
+    dependency.get()
+}
+def catalogVersion = { alias ->
+    def version = libs.findVersion(alias)
+    if (!version.present) {
+        return null
+    }
+    def requiredVersion = version.get().requiredVersion
+    requiredVersion && requiredVersion != 'null' ? requiredVersion : null
+}
+def modId = providers.gradleProperty('mod.id').get()
 def useLegacy1171To1181ForgeRunHack = ['1.17.1', '1.18', '1.18.1'].contains(minecraftVersion)
 def useLegacy1171To1182ForgeRunHack = ['1.17.1', '1.18', '1.18.1', '1.18.2'].contains(minecraftVersion)
 def useLegacy118xForgeJarRunHack = ['1.17.1', '1.18'].contains(minecraftVersion)
 def teaKit = libs.findLibrary('teakit-forge')
-def teaKitVersion = versionOrNull(libs, 'teakit')
+def teaKitVersion = catalogVersion('teakit')
 def hasTeaKit = teaKit.present && teaKitVersion != null && teaKitVersion != 'null'
-def amberVersion = versionOrNull(libs, 'amber')
-def konfigVersion = versionOrNull(libs, 'konfig')
+def amberVersion = catalogVersion('amber')
+def konfigVersion = catalogVersion('konfig')
 def packMcmetaFormat = minecraftVersion.startsWith('1.21') ? '81' : (minecraftVersion.startsWith('1.20') ? '15' : '8')
 def packMcmetaMinMax = minecraftVersion.startsWith('1.21')
     ? ',\n    "min_format": 81,\n    "max_format": 81'
     : ''
-def packMcmetaDescription = "${requiredProp(project, 'mod.name')} resources"
+def packMcmetaDescription = "${providers.gradleProperty('mod.name').get()} resources"
 def useTeaKit = providers.systemProperty('torchtoss.withTeaKit')
     .orElse(providers.gradleProperty('torchtoss.withTeaKit'))
     .map { it.toBoolean() }
@@ -25,7 +55,6 @@ def useTeaKit = providers.systemProperty('torchtoss.withTeaKit')
 
 jar {
     manifest {
-        def modId = project.findProperty('mod.id')
         attributes["MixinConfigs"] = "${modId}.mixins.json,${modId}.forge.mixins.json"
     }
 }
@@ -45,11 +74,11 @@ dependencies {
     if (useLegacy1171To1182ForgeRunHack) {
         // Old Forge runClient treats dependent mod jars better when they are staged as mods
         // instead of also living on the legacy runtime classpath as named modules.
-        compileOnly library(libs, 'amber-forge')
-        compileOnly library(libs, 'konfig-forge')
+        compileOnly lib('amber-forge')
+        compileOnly lib('konfig-forge')
     } else {
-        implementation library(libs, 'amber-forge')
-        implementation library(libs, 'konfig-forge')
+        implementation lib('amber-forge')
+        implementation lib('konfig-forge')
     }
     compileOnly 'org.jetbrains:annotations:24.1.0'
     if (useLegacy1171To1182ForgeRunHack) {
@@ -61,9 +90,9 @@ if (useLegacy1171To1182ForgeRunHack) {
     def forgeRunLauncher = javaToolchains.launcherFor {
         languageVersion = JavaLanguageVersion.of(minecraftVersion == '1.17.1' ? 16 : 17)
     }
-    def forgeVersion = versionOrNull(libs, 'forge')
+    def forgeVersion = catalogVersion('forge')
     def forgeArtifactVersion = forgeVersion.startsWith("${minecraftVersion}-") ? forgeVersion : "${minecraftVersion}-${forgeVersion}"
-    def legacyModId = requiredProp(project, 'mod.id')
+    def legacyModId = modId
     def legacyBootstrapLauncherVersion = minecraftVersion == '1.18.2'
         ? '1.0.0'
         : (['1.18', '1.18.1'].contains(minecraftVersion) ? '0.1.17' : '0.1.15')

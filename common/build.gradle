@@ -2,8 +2,29 @@ plugins {
     id 'com.iamkaf.multiloader.common'
 }
 
-def minecraftVersion = requiredProp(project, 'project.minecraft')
-def libs = catalogFor(project, minecraftVersion)
+def versionProperties = new Properties()
+def versionPropertiesFile = rootProject.file("versions/${project.name}/gradle.properties")
+if (versionPropertiesFile.isFile()) {
+    versionPropertiesFile.withInputStream { versionProperties.load(it) }
+}
+def minecraftVersion = versionProperties.getProperty('project.minecraft')
+if (!minecraftVersion) {
+    throw new GradleException("Missing project.minecraft for ${project.path}")
+}
+def catalogs = extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension)
+def catalogName = "libsMc${minecraftVersion.replace('.', '').replace('-', '')}"
+def catalog = catalogs.find(catalogName)
+if (!catalog.present) {
+    throw new GradleException("Missing version catalog '${catalogName}'")
+}
+def libs = catalog.get()
+def lib = { alias ->
+    def dependency = libs.findLibrary(alias)
+    if (!dependency.present) {
+        throw new GradleException("Missing library alias '${alias}'")
+    }
+    dependency.get()
+}
 def versionAtLeast = { current, target ->
     def parse = { version ->
         version.tokenize('.')
@@ -37,10 +58,10 @@ dependencies {
         minecraftVersion.startsWith('1.15.') ||
         minecraftVersion == '1.15' ||
         minecraftVersion.startsWith('1.14.')) {
-        modImplementation library(libs, 'amber-fabric')
-        modCompileOnly library(libs, 'konfig-fabric')
+        modImplementation lib('amber-fabric')
+        modCompileOnly lib('konfig-fabric')
     } else {
-        implementation library(libs, 'amber')
-        compileOnly library(libs, 'konfig')
+        implementation lib('amber')
+        compileOnly lib('konfig')
     }
 }

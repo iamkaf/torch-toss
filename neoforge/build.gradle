@@ -2,14 +2,35 @@ plugins {
     id 'com.iamkaf.multiloader.neoforge'
 }
 
-def minecraftVersion = requiredProp(project, 'project.minecraft')
+def versionProperties = new Properties()
+def versionPropertiesFile = rootProject.file("versions/${project.name}/gradle.properties")
+if (versionPropertiesFile.isFile()) {
+    versionPropertiesFile.withInputStream { versionProperties.load(it) }
+}
+def minecraftVersion = versionProperties.getProperty('project.minecraft')
+if (!minecraftVersion) {
+    throw new GradleException("Missing project.minecraft for ${project.path}")
+}
 def isModernLine = !minecraftVersion.startsWith('1.')
-def libs = catalogFor(project, minecraftVersion)
+def catalogs = extensions.getByType(org.gradle.api.artifacts.VersionCatalogsExtension)
+def catalogName = "libsMc${minecraftVersion.replace('.', '').replace('-', '')}"
+def catalog = catalogs.find(catalogName)
+if (!catalog.present) {
+    throw new GradleException("Missing version catalog '${catalogName}'")
+}
+def libs = catalog.get()
+def lib = { alias ->
+    def dependency = libs.findLibrary(alias)
+    if (!dependency.present) {
+        throw new GradleException("Missing library alias '${alias}'")
+    }
+    dependency.get()
+}
 def packMcmetaFormat = minecraftVersion.startsWith('1.21') ? '81' : (minecraftVersion.startsWith('1.20') ? '15' : '8')
 def packMcmetaMinMax = minecraftVersion.startsWith('1.21')
     ? ',\n    "min_format": 81,\n    "max_format": 81'
     : ''
-def packMcmetaDescription = "${requiredProp(project, 'mod.name')} resources"
+def packMcmetaDescription = "${providers.gradleProperty('mod.name').get()} resources"
 
 tasks.named('stageMergedResources').configure {
     filesMatching('pack.mcmeta') {
@@ -22,6 +43,6 @@ tasks.named('stageMergedResources').configure {
 }
 
 dependencies {
-    implementation library(libs, 'amber-neoforge')
-    implementation library(libs, 'konfig-neoforge')
+    implementation lib('amber-neoforge')
+    implementation lib('konfig-neoforge')
 }
