@@ -2,6 +2,7 @@ package com.iamkaf.torchtoss;
 
 import com.iamkaf.amber.api.functions.v1.WorldFunctions;
 import com.iamkaf.torchtoss.config.TorchTossConfig;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -14,6 +15,8 @@ import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.16.2 {
 import net.minecraft.world.item.context.BlockPlaceContext;
 //?} else {
@@ -77,10 +80,26 @@ public final class ThrowableTorchImpactHandler {
                 result
         ));
         //?}
-        if (placed == InteractionResult.FAIL) {
+        if (placed == InteractionResult.FAIL && !placeFloorTorch(projectile, torchBlock, result)) {
             dropTorchItem(projectile, item, result);
         }
         return true;
+    }
+
+    private static boolean placeFloorTorch(Snowball projectile, BlockItem torchBlock, BlockHitResult result) {
+        //? if >=1.20 {
+        Level level = projectile.level();
+        //?} else {
+        Level level = projectile.level;
+        //?}
+        BlockPos placementPos = result.getBlockPos().relative(result.getDirection());
+        BlockState state = torchBlock.getBlock().defaultBlockState();
+
+        if (!level.getBlockState(placementPos).isAir() || !state.canSurvive(level, placementPos)) {
+            return false;
+        }
+
+        return level.setBlock(placementPos, state, 11);
     }
 
     private static boolean handleEntityHit(Snowball projectile, ItemStack item, EntityHitResult result) {
