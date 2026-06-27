@@ -122,8 +122,8 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 //?}
                 .display(
                         ModItems.THROWABLE_TORCH.get(),
-                        Component.translatable("advancements.torchtoss.throw_torch.title"),
-                        Component.translatable("advancements.torchtoss.throw_torch.description"),
+                        translatable("advancements.torchtoss.throw_torch.title"),
+                        translatable("advancements.torchtoss.throw_torch.description"),
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -153,8 +153,8 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 .parent(normalTorch)
                 .display(
                         ModItems.THROWABLE_COPPER_TORCH.get(),
-                        Component.translatable("advancements.torchtoss.throw_copper_torch.title"),
-                        Component.translatable("advancements.torchtoss.throw_copper_torch.description"),
+                        translatable("advancements.torchtoss.throw_copper_torch.title"),
+                        translatable("advancements.torchtoss.throw_copper_torch.description"),
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -190,8 +190,8 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 //?}
                 .display(
                         ModItems.THROWABLE_REDSTONE_TORCH.get(),
-                        Component.translatable("advancements.torchtoss.throw_redstone_torch.title"),
-                        Component.translatable("advancements.torchtoss.throw_redstone_torch.description"),
+                        translatable("advancements.torchtoss.throw_redstone_torch.title"),
+                        translatable("advancements.torchtoss.throw_redstone_torch.description"),
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -223,8 +223,8 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 .parent(redstoneTorch)
                 .display(
                         ModItems.THROWABLE_SOUL_TORCH.get(),
-                        Component.translatable("advancements.torchtoss.throw_soul_torch.title"),
-                        Component.translatable("advancements.torchtoss.throw_soul_torch.description"),
+                        translatable("advancements.torchtoss.throw_soul_torch.title"),
+                        translatable("advancements.torchtoss.throw_soul_torch.description"),
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -266,6 +266,10 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
     //? if <1.19 {
     private static Component translatable(String key) {
         return new TranslatableComponent(key);
+    }
+    //?} else {
+    private static Component translatable(String key) {
+        return Component.translatable(key);
     }
     //?}
 }
