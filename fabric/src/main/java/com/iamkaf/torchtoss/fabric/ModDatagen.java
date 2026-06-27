@@ -1,12 +1,15 @@
 package com.iamkaf.torchtoss.fabric;
 
+//? if >=1.17 {
 import com.iamkaf.torchtoss.fabric.datagen.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+//?}
 
 /**
  * Datagen entry point for Fabric.
  */
+//? if >=1.17 {
 public final class ModDatagen implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
@@ -26,10 +29,18 @@ public final class ModDatagen implements DataGeneratorEntrypoint {
         //?} else {
         fabricDataGenerator.addProvider(ModBlockTagProvider::new);
         fabricDataGenerator.addProvider(ModItemTagProvider::new);
+        //? if >=1.18.2 {
         fabricDataGenerator.addProvider(ModBlockLootTableProvider::new);
+        //?}
         fabricDataGenerator.addProvider(ModModelProvider::new);
         fabricDataGenerator.addProvider(ModRecipeProvider::new);
         fabricDataGenerator.addProvider(ModAdvancementProvider::new);
         //?}
     }
 }
+//?} else {
+public final class ModDatagen {
+    private ModDatagen() {
+    }
+}
+//?}

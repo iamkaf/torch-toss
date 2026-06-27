@@ -1,5 +1,6 @@
 package com.iamkaf.torchtoss.fabric.datagen;
 
+//? if >=1.17 {
 import com.iamkaf.torchtoss.ModItems;
 //? if >=1.21.4 {
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
@@ -18,7 +19,7 @@ import net.minecraft.data.models.model.ModelTemplates;
 //?}
 //? if >=26.1 {
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-//?} else if >=1.19 {
+//?} else if >=1.19.3 {
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 //?} else {
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -36,7 +37,7 @@ public class ModModelProvider extends FabricBlockStateDefinitionProvider {
     public ModModelProvider(FabricPackOutput output) {
         super(output);
     }
-    //?} else if >=1.19 {
+    //?} else if >=1.19.3 {
     public ModModelProvider(FabricDataOutput output) {
         super(output);
     }
@@ -64,3 +65,9 @@ public class ModModelProvider extends FabricBlockStateDefinitionProvider {
         itemModelGenerators.generateFlatItem(ModItems.THROWABLE_REDSTONE_TORCH.get(), ModelTemplates.FLAT_ITEM);
     }
 }
+//?} else {
+public final class ModModelProvider {
+    private ModModelProvider() {
+    }
+}
+//?}

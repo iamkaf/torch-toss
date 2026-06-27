@@ -38,6 +38,11 @@
     {
       "action": "command",
       "command": "/fill -2 70 0 4 75 12 minecraft:air replace"
+    },
+    {
+      "versions": "<=1.16.5",
+      "action": "wait_ms",
+      "durationMs": 750
     }
   ],
   "steps": [
@@ -56,6 +61,11 @@
       "x": 0.5,
       "y": 70.0,
       "z": 2.5
+    },
+    {
+      "versions": "<=1.16.5",
+      "action": "wait_ms",
+      "durationMs": 350
     },
     {
       "action": "use_item",
@@ -111,6 +121,11 @@
       "x": 0.5,
       "y": 70.0,
       "z": 2.5
+    },
+    {
+      "versions": "<=1.16.5",
+      "action": "wait_ms",
+      "durationMs": 350
     },
     {
       "action": "use_item",
@@ -176,6 +191,11 @@
       "x": 0.5,
       "y": 70.0,
       "z": 2.5
+    },
+    {
+      "versions": "<=1.16.5",
+      "action": "wait_ms",
+      "durationMs": 350
     },
     {
       "action": "use_item",
@@ -266,6 +286,11 @@
       "x": 0.5,
       "y": 200.5,
       "z": 8.5
+    },
+    {
+      "versions": "<=1.16.5",
+      "action": "wait_ms",
+      "durationMs": 350
     },
     {
       "action": "use_item",
