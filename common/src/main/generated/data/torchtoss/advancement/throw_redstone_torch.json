@@ -1,5 +1,5 @@
 {
-  "parent": "torchtoss:throw_copper_torch",
+  "parent": "torchtoss:throw_torch",
   "criteria": {
     "throw_redstone_torch": {
       "conditions": {
