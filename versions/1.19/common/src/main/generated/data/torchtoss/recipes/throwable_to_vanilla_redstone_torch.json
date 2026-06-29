@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "torchtoss:throwable_redstone_torch"
+    },
+    {
+      "item": "torchtoss:throwable_redstone_torch"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:redstone_torch"
+  }
+}

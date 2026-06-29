@@ -1,5 +1,6 @@
 package com.iamkaf.torchtoss.fabric.datagen;
 
+//? if >=1.17 {
 import com.iamkaf.torchtoss.ModItems;
 import com.iamkaf.torchtoss.TorchTossConstants;
 import com.iamkaf.torchtoss.advancement.ModTriggers;
@@ -29,7 +30,7 @@ import net.minecraft.advancements.critereon.ContextAwarePredicate;
 //? if >=1.20.5 {
 import net.minecraft.core.HolderLookup;
 //?}
-//? if >=1.19 {
+//? if >=1.19.3 {
 import net.minecraft.core.registries.BuiltInRegistries;
 //?}
 import net.minecraft.network.chat.Component;
@@ -43,12 +44,14 @@ import net.minecraft.resources.ResourceLocation;
 //?}
 //? if >=26.1 {
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-//?} else if >=1.19 {
+//?} else if >=1.19.3 {
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 //?}
 import net.minecraft.world.item.Items;
-//? if <1.19 {
+//? if <1.19.3 {
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+//?}
+//? if <1.19 {
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementsProvider;
 //?}
 //? if >=1.19 {
@@ -78,7 +81,7 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
     public ModAdvancementProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(output, registryLookup);
     }
-    //?} else if >=1.19 {
+    //?} else if >=1.19.3 {
     public ModAdvancementProvider(FabricDataOutput output) {
         super(output);
     }
@@ -102,7 +105,7 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
         //? if >=1.21.11 {
         Identifier normalTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_TORCH.get());
         //?} else {
-        //? if >=1.19 {
+        //? if >=1.19.3 {
         ResourceLocation normalTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_TORCH.get());
         //?} else {
         ResourceLocation normalTorchItem = net.minecraft.core.Registry.ITEM.getKey(ModItems.THROWABLE_TORCH.get());
@@ -122,8 +125,8 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 //?}
                 .display(
                         ModItems.THROWABLE_TORCH.get(),
-                        Component.translatable("advancements.torchtoss.throw_torch.title"),
-                        Component.translatable("advancements.torchtoss.throw_torch.description"),
+                        translatable("advancements.torchtoss.throw_torch.title"),
+                        translatable("advancements.torchtoss.throw_torch.description"),
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -153,8 +156,8 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 .parent(normalTorch)
                 .display(
                         ModItems.THROWABLE_COPPER_TORCH.get(),
-                        Component.translatable("advancements.torchtoss.throw_copper_torch.title"),
-                        Component.translatable("advancements.torchtoss.throw_copper_torch.description"),
+                        translatable("advancements.torchtoss.throw_copper_torch.title"),
+                        translatable("advancements.torchtoss.throw_copper_torch.description"),
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -172,7 +175,7 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
         //? if >=1.21.11 {
         Identifier redstoneTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_REDSTONE_TORCH.get());
         //?} else {
-        //? if >=1.19 {
+        //? if >=1.19.3 {
         ResourceLocation redstoneTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_REDSTONE_TORCH.get());
         //?} else {
         ResourceLocation redstoneTorchItem = net.minecraft.core.Registry.ITEM.getKey(ModItems.THROWABLE_REDSTONE_TORCH.get());
@@ -190,8 +193,8 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 //?}
                 .display(
                         ModItems.THROWABLE_REDSTONE_TORCH.get(),
-                        Component.translatable("advancements.torchtoss.throw_redstone_torch.title"),
-                        Component.translatable("advancements.torchtoss.throw_redstone_torch.description"),
+                        translatable("advancements.torchtoss.throw_redstone_torch.title"),
+                        translatable("advancements.torchtoss.throw_redstone_torch.description"),
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -209,7 +212,7 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
         //? if >=1.21.11 {
         Identifier soulTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_SOUL_TORCH.get());
         //?} else {
-        //? if >=1.19 {
+        //? if >=1.19.3 {
         ResourceLocation soulTorchItem = BuiltInRegistries.ITEM.getKey(ModItems.THROWABLE_SOUL_TORCH.get());
         //?} else {
         ResourceLocation soulTorchItem = net.minecraft.core.Registry.ITEM.getKey(ModItems.THROWABLE_SOUL_TORCH.get());
@@ -223,8 +226,8 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 .parent(redstoneTorch)
                 .display(
                         ModItems.THROWABLE_SOUL_TORCH.get(),
-                        Component.translatable("advancements.torchtoss.throw_soul_torch.title"),
-                        Component.translatable("advancements.torchtoss.throw_soul_torch.description"),
+                        translatable("advancements.torchtoss.throw_soul_torch.title"),
+                        translatable("advancements.torchtoss.throw_soul_torch.description"),
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -267,5 +270,15 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
     private static Component translatable(String key) {
         return new TranslatableComponent(key);
     }
+    //?} else {
+    private static Component translatable(String key) {
+        return Component.translatable(key);
+    }
     //?}
 }
+//?} else {
+public final class ModAdvancementProvider {
+    private ModAdvancementProvider() {
+    }
+}
+//?}

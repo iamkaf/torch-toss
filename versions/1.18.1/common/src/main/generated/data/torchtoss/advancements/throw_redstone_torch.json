@@ -1,0 +1,31 @@
+{
+  "parent": "torchtoss:throw_torch",
+  "display": {
+    "icon": {
+      "item": "torchtoss:throwable_redstone_torch"
+    },
+    "title": {
+      "translate": "advancements.torchtoss.throw_redstone_torch.title"
+    },
+    "description": {
+      "translate": "advancements.torchtoss.throw_redstone_torch.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "throw_redstone_torch": {
+      "trigger": "torchtoss:throw_torch",
+      "conditions": {
+        "item": "torchtoss:throwable_redstone_torch"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "throw_redstone_torch"
+    ]
+  ]
+}

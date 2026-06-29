@@ -12,7 +12,7 @@ import net.minecraft.core.registries.Registries;
 //?} else {
 import net.minecraft.core.Registry;
 //?}
-//? if >=1.21.2 {
+//? if <1.16 || >=1.21.2 {
 import net.minecraft.resources.ResourceKey;
 //?}
 //? if >=1.21.11 {
@@ -40,7 +40,10 @@ public class ModItems {
     //?} else if >=1.16 {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(TorchTossConstants.MOD_ID, Registry.ITEM_REGISTRY);
     //?} else {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(TorchTossConstants.MOD_ID, Registry.ITEM);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(
+            TorchTossConstants.MOD_ID,
+            ResourceKey.createRegistryKey(new ResourceLocation("minecraft", "item"))
+    );
     //?}
 
     public static final Supplier<Item> THROWABLE_TORCH = ITEMS.register(

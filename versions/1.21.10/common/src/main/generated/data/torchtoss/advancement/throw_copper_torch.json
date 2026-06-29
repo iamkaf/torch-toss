@@ -1,0 +1,29 @@
+{
+  "parent": "torchtoss:throw_torch",
+  "criteria": {
+    "throw_copper_torch": {
+      "conditions": {
+        "item": "torchtoss:throwable_copper_torch"
+      },
+      "trigger": "torchtoss:throw_torch"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.torchtoss.throw_copper_torch.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "torchtoss:throwable_copper_torch"
+    },
+    "title": {
+      "translate": "advancements.torchtoss.throw_copper_torch.title"
+    }
+  },
+  "requirements": [
+    [
+      "throw_copper_torch"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

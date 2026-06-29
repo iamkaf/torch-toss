@@ -1,16 +1,19 @@
 package com.iamkaf.torchtoss.fabric.datagen;
 
+//? if >=1.17 {
 import com.iamkaf.torchtoss.ModItems;
 import com.iamkaf.torchtoss.TorchTossConstants;
 //? if >=26.1 {
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-//?} else if >=1.19 {
+//?} else if >=1.19.3 {
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 //?} else {
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 //?}
 //? if >=1.19 {
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+//?} else {
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipesProvider;
 //?}
 //? if >=1.20.5 {
 import net.minecraft.core.HolderLookup;
@@ -59,7 +62,7 @@ public class ModRecipeProvider extends FabricRecipesProvider {
     public ModRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
-    //?} else if >=1.19 {
+    //?} else if >=1.19.3 {
     public ModRecipeProvider(FabricDataOutput output) {
         super(output);
     }
@@ -174,7 +177,7 @@ public class ModRecipeProvider extends FabricRecipesProvider {
                 RecipeCategory.DECORATIONS,
                 new ItemStack(item, count)
         );
-        //?} else if >=1.19 {
+        //?} else if >=1.19.3 {
         return ShapelessRecipeBuilder.shapeless(
                 RecipeCategory.DECORATIONS,
                 item,
@@ -209,3 +212,9 @@ public class ModRecipeProvider extends FabricRecipesProvider {
     }
     //?}
 }
+//?} else {
+public final class ModRecipeProvider {
+    private ModRecipeProvider() {
+    }
+}
+//?}

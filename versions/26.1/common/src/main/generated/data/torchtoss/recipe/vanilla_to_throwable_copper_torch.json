@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:copper_torch",
+    "minecraft:copper_torch"
+  ],
+  "result": {
+    "count": 2,
+    "id": "torchtoss:throwable_copper_torch"
+  }
+}

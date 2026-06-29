@@ -1,0 +1,31 @@
+{
+  "criteria": {
+    "throw_torch": {
+      "conditions": {
+        "item": "torchtoss:throwable_torch"
+      },
+      "trigger": "torchtoss:throw_torch"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.torchtoss.throw_torch.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "torchtoss:throwable_torch"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.torchtoss.throw_torch.title"
+    }
+  },
+  "requirements": [
+    [
+      "throw_torch"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

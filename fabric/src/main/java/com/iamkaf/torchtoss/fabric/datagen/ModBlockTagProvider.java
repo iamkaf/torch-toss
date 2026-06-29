@@ -1,5 +1,6 @@
 package com.iamkaf.torchtoss.fabric.datagen;
 
+//? if >=1.17 {
 //? if >=26.1 {
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
@@ -50,3 +51,9 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     }
     //?}
 }
+//?} else {
+public final class ModBlockTagProvider {
+    private ModBlockTagProvider() {
+    }
+}
+//?}
