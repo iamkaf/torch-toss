@@ -1,0 +1,10 @@
+{
+  "match": {
+    "items": "torchtoss:throwable_redstone_torch"
+  },
+  "luminance": {
+    "type": "block",
+    "block": "minecraft:redstone_torch"
+  },
+  "water_sensitive": true
+}
