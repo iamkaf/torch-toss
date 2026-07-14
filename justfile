@@ -250,11 +250,11 @@ boot-check-all timeout="80":
     just boot-check "$node" "{{timeout}}"; \
   done
 
-scenario-check node timeout="240":
-  @scripts/feature-scenario-node.sh "{{node}}" "{{timeout}}"
+teakit-check node timeout="240":
+  @scripts/feature-test-node.sh "{{node}}" "{{timeout}}"
 
-scenario-check-all timeout="240":
+teakit-check-all timeout="240":
   @for node in $(just list-nodes); do \
     echo "==> $node"; \
-    just scenario-check "$node" "{{timeout}}"; \
+    just teakit-check "$node" "{{timeout}}"; \
   done

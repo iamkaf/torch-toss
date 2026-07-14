@@ -21,4 +21,4 @@ versions/<minecraft>/common/src/main/generated
 
 Run `just datagen-all` after changing datagen providers. Minecraft `1.17` and newer use Fabric datagen to write into the selected version lane. Minecraft `1.14.4` through `1.16.5` use checked-in compatibility lanes because Fabric datagen is not available there as a stable runtime path.
 
-Use `just run <minecraft-version> build` for a full build of one Minecraft line, or `just scenario-check <minecraft-version>-<loader>` for a runtime feature check.
+Use `just run <minecraft-version> build` for a full build of one Minecraft line, or `just teakit-check <minecraft-version>-<loader>` for a runtime feature check.
