@@ -1,0 +1,14 @@
+{
+  "advancements.torchtoss.throw_copper_torch.description": "wirf eine werfbare Kupferfackel",
+  "advancements.torchtoss.throw_copper_torch.title": "auf Grün wechseln",
+  "advancements.torchtoss.throw_redstone_torch.description": "wirf eine werfbare redstone Fackel",
+  "advancements.torchtoss.throw_redstone_torch.title": "Fernaktivierung",
+  "advancements.torchtoss.throw_soul_torch.description": "wirf eine werfbare Seelenfackel",
+  "advancements.torchtoss.throw_soul_torch.title": "Eins mit der Flamme",
+  "advancements.torchtoss.throw_torch.description": "wirf eine werfbare Fackel",
+  "advancements.torchtoss.throw_torch.title": "Eleuchte die Welt",
+  "item.torchtoss.throwable_copper_torch": "werfbare Kupferfackel",
+  "item.torchtoss.throwable_redstone_torch": "werfbare redstone Fackel",
+  "item.torchtoss.throwable_soul_torch": "werfbare Seelenfackel",
+  "item.torchtoss.throwable_torch": "werfbare Fackel"
+}

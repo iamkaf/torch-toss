@@ -6,3 +6,7 @@ plugins {
 }
 
 stonecutter active "26.1.2".let { multiloaderStonecutter.active(it) }
+
+multiloaderTranslations {
+    projectSlug.set("torch-toss")
+}
