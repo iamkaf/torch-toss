@@ -251,10 +251,30 @@ boot-check-all timeout="80":
   done
 
 teakit-check node timeout="240":
-  @scripts/feature-test-node.sh "{{node}}" "{{timeout}}"
+  @if ! just list-nodes | grep -Fxq "{{node}}"; then \
+    echo "Unknown TeaKit node: {{node}}"; \
+    exit 1; \
+  fi
+  @node="{{node}}"; version="${node%-*}"; loader="${node##*-}"; ./gradlew teakitCheck \
+    -Pmultiloader.target.versions="$version" \
+    -Pmultiloader.target.loaders="$loader" \
+    -Pteakit.node="{{node}}" \
+    -Pteakit.testFile=test/teakit/throwables.test.ts \
+    -Pteakit.timeout="{{timeout}}" \
+    --console=plain
 
 teakit-check-all timeout="240":
-  @for node in $(just list-nodes); do \
-    echo "==> $node"; \
-    just teakit-check "$node" "{{timeout}}"; \
+  @for version in $(just list-versions); do \
+    pids=(); \
+    for loader in $(just list-loaders "$version"); do \
+      just teakit-check "$version-$loader" "{{timeout}}" & \
+      pids+=("$!"); \
+    done; \
+    status=0; \
+    for pid in "${pids[@]}"; do \
+      wait "$pid" || status=1; \
+    done; \
+    if [ "$status" -ne 0 ]; then \
+      exit "$status"; \
+    fi; \
   done
