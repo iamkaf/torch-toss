@@ -8,6 +8,10 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 //?}
 import java.util.Optional;
+//? if >=26.3 {
+/*import net.minecraft.core.Holder;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+*///?}
 //? if <1.16 {
 import java.util.List;
 import java.util.Map;
@@ -19,6 +23,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 //?}
 //? if >=26.2 {
+//? if <26.3
 import net.minecraft.advancements.predicates.ContextAwarePredicate;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
@@ -191,7 +196,9 @@ public class ThrowableTorchTrigger extends SimpleCriterionTrigger<ThrowableTorch
      * The trigger instance - stores condition data for JSON serialization.
      */
     //? if >=1.20.3 {
-    //? if >=1.21.11 {
+    //? if >=26.3 {
+    /*public record TriggerInstance(Optional<Holder<LootItemCondition>> player, Identifier item)
+    *///?} else if >=1.21.11 {
     public record TriggerInstance(Optional<ContextAwarePredicate> player, Identifier item)
     //?} else {
     public record TriggerInstance(Optional<ContextAwarePredicate> player, ResourceLocation item)
@@ -200,6 +207,9 @@ public class ThrowableTorchTrigger extends SimpleCriterionTrigger<ThrowableTorch
 
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
+                //? if >=26.3
+                /*LootItemCondition.CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),*/
+                //? if <26.3
                 EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
                 //? if >=1.21.11 {
                 Identifier.CODEC.fieldOf("item").forGetter(TriggerInstance::item)
@@ -220,10 +230,6 @@ public class ThrowableTorchTrigger extends SimpleCriterionTrigger<ThrowableTorch
             return thrownKey.equals(this.item);
         }
 
-        @Override
-        public Optional<ContextAwarePredicate> player() {
-            return this.player;
-        }
     }
     //?} else if >=1.20.2 {
     public static class TriggerInstance extends AbstractCriterionTriggerInstance {

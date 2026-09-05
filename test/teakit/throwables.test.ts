@@ -11,6 +11,7 @@ describe.configure({
     Capability.ClientInput,
     Capability.ClientScreenshot,
     Capability.PlayerUseItem,
+    Capability.PlayerInventory,
     Capability.RuntimeSummary,
     Capability.RuntimeTiming,
     Capability.ServerCommands,
@@ -35,6 +36,7 @@ test("throws every supported torch and damages a nearby mob", async (ctx) => {
     for (const [throwable, placed] of torches) {
       await ctx.commands.run(`/setblock ${landing.x} ${landing.y} ${landing.z} minecraft:air`);
       await ctx.commands.run(replaceMainHand(version, throwable));
+      await ctx.player.inventory().waitForItem(throwable, { selected: true, timeout: "5s" });
       await ctx.player.teleport(launch);
       await ctx.player.lookAt(pos(0.5, 70, 2.5));
       if (atMost(version, "1.16.5")) await ctx.runtime.wait(350);

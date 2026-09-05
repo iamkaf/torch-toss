@@ -43,15 +43,26 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.CompletableFuture;
 //?}
 import java.util.function.Consumer;
+//? if >=26.3 {
+/*import net.minecraft.advancements.Advancement;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.world.item.crafting.Recipe;
+*///?}
 
 /**
  * Generates crafting recipes.
  */
 //? if >=1.21.2 {
 public class ModRecipeProvider extends RecipeProvider {
+    //? if >=26.3 {
+    /*private ModRecipeProvider(BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements) {
+        super(recipes, advancements);
+    }
+    *///?} else {
     protected ModRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
         super(provider, recipeOutput);
     }
+    //?}
 //?} else {
 //? if >=1.19 {
 public class ModRecipeProvider extends FabricRecipeProvider {
@@ -164,7 +175,9 @@ public class ModRecipeProvider extends FabricRecipesProvider {
     //?}
 
     private ShapelessRecipeBuilder shapeless(ItemLike item, int count) {
-        //? if >=26.1 {
+        //? if >=26.3 {
+        /*return shapeless(RecipeCategory.DECORATIONS, item, count);
+        *///?} else if >=26.1 {
         return ShapelessRecipeBuilder.shapeless(
                 registries.lookupOrThrow(BuiltInRegistries.ITEM.key()),
                 RecipeCategory.DECORATIONS,
@@ -201,9 +214,16 @@ public class ModRecipeProvider extends FabricRecipesProvider {
         //?}
 
         @Override
+        //? if >=26.3 {
+        /*protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.@NotNull Provider registries,
+                BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements) {
+            return new ModRecipeProvider(recipes, advancements);
+        }
+        *///?} else {
         protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.@NotNull Provider registries, @NotNull RecipeOutput output) {
             return new ModRecipeProvider(registries, output);
         }
+        //?}
 
         @Override
         public @NotNull String getName() {
