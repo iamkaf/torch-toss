@@ -28,9 +28,9 @@ test("throws every supported torch and damages a nearby mob", async (ctx) => {
   try {
     const torches = [
       ["torchtoss:throwable_torch", "minecraft:torch"],
-      ...(atLeast(version, "1.16") ? [["torchtoss:throwable_soul_torch", "minecraft:soul_torch"]] : []),
+      ...(atLeast(version, "1.16") ? [["torchtoss:throwable_soul_torch", "minecraft:soul_torch"] as const] : []),
       ["torchtoss:throwable_redstone_torch", "minecraft:redstone_torch"],
-      ...(atLeast(version, "26.1") ? [["torchtoss:throwable_copper_torch", "minecraft:copper_torch"]] : []),
+      ...(atLeast(version, "26.1") ? [["torchtoss:throwable_copper_torch", "minecraft:copper_torch"] as const] : []),
     ] as const;
 
     for (const [throwable, placed] of torches) {
