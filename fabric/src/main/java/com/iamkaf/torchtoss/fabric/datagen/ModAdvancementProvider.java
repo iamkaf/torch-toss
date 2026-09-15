@@ -17,6 +17,7 @@ import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.FrameType;
 //?}
 //? if >=26.2 {
+//? if <26.3
 import net.minecraft.advancements.predicates.ContextAwarePredicate;
 //?} else if >=1.21.11 {
 import net.minecraft.advancements.criterion.ContextAwarePredicate;
@@ -127,6 +128,7 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                         ModItems.THROWABLE_TORCH.get(),
                         translatable("advancements.torchtoss.throw_torch.title"),
                         translatable("advancements.torchtoss.throw_torch.description"),
+                        //? if <26.3
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -139,6 +141,9 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 )
                 .addCriterion("throw_torch",
                         throwableTorchCriterion(normalTorchItem))
+                //? if >=26.3
+                /*.save(writer, TorchTossConstants.resource("throw_torch"));*/
+                //? if <26.3
                 .save(writer, TorchTossConstants.resource("throw_torch").toString());
 
         //? if >=1.21.10 {
@@ -158,6 +163,7 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                         ModItems.THROWABLE_COPPER_TORCH.get(),
                         translatable("advancements.torchtoss.throw_copper_torch.title"),
                         translatable("advancements.torchtoss.throw_copper_torch.description"),
+                        //? if <26.3
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -168,6 +174,9 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 )
                 .addCriterion("throw_copper_torch",
                         throwableTorchCriterion(copperTorchItem))
+                //? if >=26.3
+                /*.save(writer, TorchTossConstants.resource("throw_copper_torch"));*/
+                //? if <26.3
                 .save(writer, TorchTossConstants.resource("throw_copper_torch").toString());
         //?}
 
@@ -195,6 +204,7 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                         ModItems.THROWABLE_REDSTONE_TORCH.get(),
                         translatable("advancements.torchtoss.throw_redstone_torch.title"),
                         translatable("advancements.torchtoss.throw_redstone_torch.description"),
+                        //? if <26.3
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -205,6 +215,9 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 )
                 .addCriterion("throw_redstone_torch",
                         throwableTorchCriterion(redstoneTorchItem))
+                //? if >=26.3
+                /*.save(writer, TorchTossConstants.resource("throw_redstone_torch"));*/
+                //? if <26.3
                 .save(writer, TorchTossConstants.resource("throw_redstone_torch").toString());
 
         //? if >=1.16 {
@@ -228,6 +241,7 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                         ModItems.THROWABLE_SOUL_TORCH.get(),
                         translatable("advancements.torchtoss.throw_soul_torch.title"),
                         translatable("advancements.torchtoss.throw_soul_torch.description"),
+                        //? if <26.3
                         null,
                         //? if >=1.20.3 {
                         AdvancementType.TASK,
@@ -238,6 +252,9 @@ public class ModAdvancementProvider extends FabricAdvancementsProvider {
                 )
                 .addCriterion("throw_soul_torch",
                         throwableTorchCriterion(soulTorchItem))
+                //? if >=26.3
+                /*.save(writer, TorchTossConstants.resource("throw_soul_torch"));*/
+                //? if <26.3
                 .save(writer, TorchTossConstants.resource("throw_soul_torch").toString());
         //?}
     }

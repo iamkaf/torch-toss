@@ -28,7 +28,11 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-//? if >=1.17 {
+//? if >=26.3 {
+/*import net.minecraft.core.Holder;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+*///?} else if >=1.17 {
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 //?} else {
 import net.minecraft.world.level.storage.loot.RandomValueBounds;
@@ -274,7 +278,11 @@ public class ModItems {
         });
     }
 
-    //? if >=1.17 {
+    //? if >=26.3 {
+    /*private static Holder<ContextIntProvider> randomCount(int min, int max) {
+        return ContextIntProviders.between(min, max);
+    }
+    *///?} else if >=1.17 {
     private static UniformGenerator randomCount(int min, int max) {
         return UniformGenerator.between(min, max);
     }
