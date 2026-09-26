@@ -57,9 +57,9 @@ async function prepare(ctx: TeaKitTestContext) {
   await ctx.commands.batch([
     "/gamemode creative @s",
     "/clear @s",
-    "/tp @s 0.5 70 0.5",
     "/fill -2 69 0 4 69 12 minecraft:stone replace",
     "/fill -2 70 0 4 75 12 minecraft:air replace",
+    "/tp @s 0.5 70 0.5",
   ]);
 }
 
@@ -71,9 +71,9 @@ async function assertMobHit(ctx: TeaKitTestContext, version: string) {
 
   await ctx.commands.batch([
     `/gamemode ${legacy ? "survival" : "creative"} @s`,
-    `/tp @s 0.5 ${arenaY} 6.5`,
     `/fill -2 ${arenaY - 1} 6 2 ${arenaY - 1} 10 minecraft:stone replace`,
     `/fill -2 ${arenaY} 6 2 ${arenaY + 5} 10 minecraft:air replace`,
+    `/tp @s 0.5 ${arenaY} 6.5`,
     `/summon ${type} ${arena.x} ${arena.y} ${arena.z} {NoAI:1b${legacy ? "" : ",Health:1.0f"}}`,
     replaceMainHand(version, "torchtoss:throwable_torch"),
   ]);
