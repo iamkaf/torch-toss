@@ -17,7 +17,6 @@ describe.configure({
     Capability.ServerCommands,
     Capability.WorldBlock,
     Capability.WorldEntities,
-    Capability.WorldLoot,
   ],
 });
 
@@ -28,24 +27,23 @@ test("throws every supported torch and damages a nearby mob", async (ctx) => {
   try {
     const torches = [
       ["torchtoss:throwable_torch", "minecraft:torch"],
-      ...(atLeast(version, "1.16") ? [["torchtoss:throwable_soul_torch", "minecraft:soul_torch"] as const] : []),
+      ["torchtoss:throwable_soul_torch", "minecraft:soul_torch"],
       ["torchtoss:throwable_redstone_torch", "minecraft:redstone_torch"],
       ...(atLeast(version, "26.1") ? [["torchtoss:throwable_copper_torch", "minecraft:copper_torch"] as const] : []),
     ] as const;
 
     for (const [throwable, placed] of torches) {
       await ctx.commands.run(`/setblock ${landing.x} ${landing.y} ${landing.z} minecraft:air`);
-      await ctx.commands.run(replaceMainHand(version, throwable));
+      await ctx.commands.run(replaceMainHand(throwable));
       await ctx.player.inventory().waitForItem(throwable, { selected: true, timeout: "5s" });
       await ctx.player.teleport(launch);
       await ctx.player.lookAt(pos(0.5, 70, 2.5));
-      if (atMost(version, "1.16.5")) await ctx.runtime.wait(350);
       await ctx.player.useItem();
       await expect(async () => (await ctx.world.block(landing)).id)
         .toEventuallyEqual(placed, { timeout: "5s", interval: 100 });
     }
 
-    await assertMobHit(ctx, version);
+    await assertMobHit(ctx);
     await ctx.client.screenshot(`torchtoss-throwables-${version}`);
   } finally {
     await cleanup(ctx);
@@ -63,19 +61,18 @@ async function prepare(ctx: TeaKitTestContext) {
   ]);
 }
 
-async function assertMobHit(ctx: TeaKitTestContext, version: string) {
-  const legacy = atMost(version, "1.15.2");
-  const type = legacy ? "minecraft:chicken" : "minecraft:cow";
-  const arenaY = legacy ? 70 : 200;
+async function assertMobHit(ctx: TeaKitTestContext) {
+  const type = "minecraft:cow";
+  const arenaY = 200;
   const arena = pos(0.5, arenaY, 8.5);
 
   await ctx.commands.batch([
-    `/gamemode ${legacy ? "survival" : "creative"} @s`,
+    "/gamemode creative @s",
     `/fill -2 ${arenaY - 1} 6 2 ${arenaY - 1} 10 minecraft:stone replace`,
     `/fill -2 ${arenaY} 6 2 ${arenaY + 5} 10 minecraft:air replace`,
     `/tp @s 0.5 ${arenaY} 6.5`,
-    `/summon ${type} ${arena.x} ${arena.y} ${arena.z} {NoAI:1b${legacy ? "" : ",Health:1.0f"}}`,
-    replaceMainHand(version, "torchtoss:throwable_torch"),
+    `/summon ${type} ${arena.x} ${arena.y} ${arena.z} {NoAI:1b,Health:1.0f}`,
+    replaceMainHand("torchtoss:throwable_torch"),
   ]);
 
   const mobs = ctx.entities.query({ type, origin: arena, radius: 16 });
@@ -83,24 +80,13 @@ async function assertMobHit(ctx: TeaKitTestContext, version: string) {
   await ctx.player.teleport(pos(0.5, arenaY, 7));
   await ctx.player.lookAt(pos(0.5, arenaY + 0.5, 8.5));
 
-  const attempts = legacy ? 4 : 1;
-  for (let attempt = 0; attempt < attempts; attempt += 1) {
-    if (attempt > 0) await ctx.commands.run(replaceMainHand(version, "torchtoss:throwable_torch"));
-    if (atMost(version, "1.16.5")) await ctx.runtime.wait(350);
-    await ctx.player.useItem();
-    await ctx.runtime.wait(legacy ? 750 : 650);
-  }
-
-  if (legacy) {
-    await ctx.loot.near(arena, { item: "minecraft:chicken", radius: 16 })
-      .waitForCountAtLeast(1, { timeout: "30s" });
-  } else {
-    await mobs.waitForCount(0, { timeout: "7s" });
-  }
+  await ctx.player.useItem();
+  await ctx.runtime.wait(650);
+  await mobs.waitForCount(0, { timeout: "7s" });
 }
 
 async function cleanup(ctx: TeaKitTestContext) {
-  for (const type of ["minecraft:item", "minecraft:snowball", "minecraft:cow", "minecraft:chicken"] as const) {
+  for (const type of ["minecraft:item", "minecraft:snowball", "minecraft:cow"] as const) {
     await ctx.entities.query({ type, origin: pos(0, 100, 0), radius: 160 }).removeAll();
   }
   await ctx.commands.batch([
@@ -110,18 +96,12 @@ async function cleanup(ctx: TeaKitTestContext) {
   ]);
 }
 
-function replaceMainHand(version: string, item: string): string {
-  return atMost(version, "1.16.5")
-    ? `/replaceitem entity @s weapon.mainhand ${item}`
-    : `/item replace entity @s weapon.mainhand with ${item}`;
+function replaceMainHand(item: string): string {
+  return `/item replace entity @s weapon.mainhand with ${item}`;
 }
 
 function atLeast(actual: string, expected: string): boolean {
   return compareVersions(actual, expected) >= 0;
-}
-
-function atMost(actual: string, expected: string): boolean {
-  return compareVersions(actual, expected) <= 0;
 }
 
 function compareVersions(left: string, right: string): number {

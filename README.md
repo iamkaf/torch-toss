@@ -11,7 +11,7 @@ Requires [Amber](https://modrinth.com/mod/amber) and [Konfig](https://modrinth.c
 
 ## Development
 
-Torch Toss is maintained as a multiversion, multiloader mod. Shared gameplay code and stable assets live in the top-level `common`, `fabric`, `forge`, and `neoforge` roots. Minecraft-version-specific resources live under `versions/<minecraft>/...`.
+Torch Toss is maintained for Minecraft 1.18.2, 1.19.4, 1.20.1, 1.21.1, 1.21.11, 26.1.2, 26.2, and 26.3. Shared gameplay code and stable assets live in the top-level `common`, `fabric`, `forge`, and `neoforge` roots. Minecraft-version-specific resources live under `versions/<minecraft>/...`.
 
 Generated runtime resources are committed as source artifacts under:
 
@@ -19,6 +19,6 @@ Generated runtime resources are committed as source artifacts under:
 versions/<minecraft>/common/src/main/generated
 ```
 
-Run `just datagen-all` after changing datagen providers. Minecraft `1.17` and newer use Fabric datagen to write into the selected version lane. Minecraft `1.14.4` through `1.16.5` use checked-in compatibility lanes because Fabric datagen is not available there as a stable runtime path.
+Run `just datagen-all` after changing datagen providers. Fabric datagen writes into each selected version lane.
 
 Use `just run <minecraft-version> build` for a full build of one Minecraft line, or `just teakit-check <minecraft-version>-<loader>` for a runtime feature check.

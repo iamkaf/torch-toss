@@ -1,3 +1,5 @@
+import com.iamkaf.multiloader.support.MultiloaderProjectContext
+
 plugins {
     id("com.iamkaf.multiloader.fabric")
 }
@@ -19,6 +21,9 @@ repositories {
 }
 
 dependencies {
+    val multiloader = MultiloaderProjectContext.of(project)
+    compileOnly(multiloader.library(multiloader.catalogFor(), "konfig"))
+
     if (name == "1.21.1") {
         // LambDynamicLights
         "modRuntimeOnly"("maven.modrinth:yBW8D80W:4.8.10+1.21.1")
