@@ -12,6 +12,9 @@ list-loaders version:
 list-nodes:
   @for props in versions/*/gradle.properties; do version=$(basename "$(dirname "$props")"); loaders=$(sed -nE 's/^project\.enabled-loaders=(.*)$/\1/p' "$props" | head -n1); for loader in $(printf '%s\n' "$loaders" | tr ',' '\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | sed '/^$/d'); do echo "$version-$loader"; done; done | sort -V
 
+publish-version version *args:
+  @tasks=(":common:{{version}}:publishAllPublicationsToKafMavenRepository"); for loader in $(just list-loaders "{{version}}"); do tasks+=(":$loader:{{version}}:publishAllPublicationsToKafMavenRepository"); done; ./gradlew --configure-on-demand "${tasks[@]}" {{args}} --console=plain
+
 projects:
   @./gradlew projects --console=plain
 
