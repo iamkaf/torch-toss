@@ -12,9 +12,6 @@ list-loaders version:
 list-nodes:
   @for props in versions/*/gradle.properties; do version=$(basename "$(dirname "$props")"); loaders=$(sed -nE 's/^project\.enabled-loaders=(.*)$/\1/p' "$props" | head -n1); for loader in $(printf '%s\n' "$loaders" | tr ',' '\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | sed '/^$/d'); do echo "$version-$loader"; done; done | sort -V
 
-publish-version version *args:
-  @tasks=(":common:{{version}}:publishAllPublicationsToKafMavenRepository"); for loader in $(just list-loaders "{{version}}"); do tasks+=(":$loader:{{version}}:publishAllPublicationsToKafMavenRepository"); done; ./gradlew --configure-on-demand "${tasks[@]}" {{args}} --console=plain
-
 projects:
   @./gradlew projects --console=plain
 
@@ -29,14 +26,6 @@ run first="" second="" *rest:
   @first="{{first}}"; \
   second="{{second}}"; \
   rest=( {{rest}} ); \
-  task_suffix() { \
-    local version="$1"; \
-    local loader="$2"; \
-    local digits loader_cap; \
-    digits="${version//./}"; \
-    loader_cap="${loader^}"; \
-    printf '%s%s' "$digits" "$loader_cap"; \
-  }; \
   ensure_loader_enabled() { \
     local version="$1"; \
     local loader="$2"; \
@@ -87,17 +76,7 @@ run first="" second="" *rest:
       extra=( "${rest[@]:1}" ); \
       case "$task" in \
         publish) \
-          tasks=( ":$loader:$version:publishAllPublicationsToKafMavenRepository" "${extra[@]}" ); \
-          ;; \
-        publishMod|publishRelease) \
-          suffix=$(task_suffix "$version" "$loader"); \
-          tasks=( "publishCurseforge$suffix" "publishModrinth$suffix" "${extra[@]}" ); \
-          ;; \
-        publishModrinth) \
-          tasks=( "publishModrinth$(task_suffix "$version" "$loader")" "${extra[@]}" ); \
-          ;; \
-        publishCurseforge) \
-          tasks=( "publishCurseforge$(task_suffix "$version" "$loader")" "${extra[@]}" ); \
+          tasks=( ":$loader:$version:publishToMavenLocal" "${extra[@]}" ); \
           ;; \
         *) \
           if [[ "$task" == :* ]]; then \
@@ -134,30 +113,11 @@ run first="" second="" *rest:
           tasks+=( "${extra[@]}" ); \
           ;; \
         publish) \
-          tasks=( ":common:$version:publishAllPublicationsToKafMavenRepository" ); \
+          tasks=( ":common:$version:publishToMavenLocal" ); \
           for loader in $(just list-loaders "$version"); do \
-            tasks+=( ":$loader:$version:publishAllPublicationsToKafMavenRepository" ); \
+            tasks+=( ":$loader:$version:publishToMavenLocal" ); \
           done; \
-          tasks+=( "${extra[@]}" ); \
-          ;; \
-        publishMod|publishRelease) \
-          for loader in $(just list-loaders "$version"); do \
-            suffix=$(task_suffix "$version" "$loader"); \
-            tasks+=( "publishCurseforge$suffix" "publishModrinth$suffix" ); \
-          done; \
-          tasks+=( "${extra[@]}" ); \
-          ;; \
-        publishModrinth) \
-          for loader in $(just list-loaders "$version"); do \
-            tasks+=( "publishModrinth$(task_suffix "$version" "$loader")" ); \
-          done; \
-          tasks+=( "${extra[@]}" ); \
-          ;; \
-        publishCurseforge) \
-          for loader in $(just list-loaders "$version"); do \
-            tasks+=( "publishCurseforge$(task_suffix "$version" "$loader")" ); \
-          done; \
-          tasks+=( "${extra[@]}" ); \
+          tasks+=( --max-workers=1 "${extra[@]}" ); \
           ;; \
         *) \
           tasks=( "$task" "${extra[@]}" ); \
