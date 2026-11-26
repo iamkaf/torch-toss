@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 5.4.0
 
+### Added
+
+- Forge: The Config button in the mod list now opens the config screen.
+
 ### Changed
 
 - Ported to Minecraft 1.21.1.
