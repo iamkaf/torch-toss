@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Ported to Minecraft 1.21.1.
 
+### Fixed
+
+- NeoForge: The Config button in the mod list opens the config screen again.
+
 ## 5.3.0
 
 ### Changed
