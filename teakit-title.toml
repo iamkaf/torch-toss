@@ -1,0 +1,6 @@
+modId = "torchtoss"
+projectKey = "torch-toss"
+
+# Stay on the title screen instead of joining the dev world.
+[defaults.systemProperties]
+"teakit.autoWorld" = "false"
