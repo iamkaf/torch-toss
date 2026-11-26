@@ -1,5 +1,5 @@
 import { Capability, Readiness, describe, expect, pos, test } from "@teakit/test";
-import type { TeaKitTestContext } from "@teakit/test";
+import type { ItemId, TeaKitTestContext } from "@teakit/test";
 
 const TORCHES = [
   ["torchtoss:throwable_torch", "minecraft:torch", "torchtoss:throw_torch"],
@@ -111,7 +111,7 @@ async function prepare(ctx: TeaKitTestContext) {
 }
 
 /** Holds a throwable, aims, and throws it. */
-async function throwAt(ctx: TeaKitTestContext, throwable: string, target: ReturnType<typeof pos>) {
+async function throwAt(ctx: TeaKitTestContext, throwable: ItemId, target: ReturnType<typeof pos>) {
   await ctx.player.teleport(thrower);
   await ctx.commands.run(`/item replace entity @s weapon.mainhand with ${throwable}`);
   await ctx.player.inventory().waitForItem(throwable, { selected: true, timeout: "5s" });
